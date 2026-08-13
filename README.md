@@ -1,51 +1,56 @@
-# SkillGraph
+SkillGraph
 
-**SkillGraph** is a developer skill assessment and skill-gap analysis application powered by **CognoDB**, a graph database compatible with openCypher and the Neo4j JavaScript driver.
+SkillGraph is a developer skill assessment and skill-gap analysis application powered by CognoDB, a graph database compatible with openCypher and the Neo4j JavaScript driver.
 
 Instead of only returning a quiz score, SkillGraph models how technical skills depend on one another. After a candidate completes the assessment, the application calculates skill-level scores and uses graph traversals to identify weaknesses and the higher-level skills those weaknesses may affect.
 
----
+Live Demo
 
-## Live Demo
+Frontend: https://skill-graph-wheat.vercel.app/
 
-- Frontend: `ADD_FRONTEND_DEPLOYMENT_URL`
-- Backend Health Check: `ADD_BACKEND_URL/api/health`
-- Screen Recording: `ADD_SCREEN_RECORDING_URL`
+Backend API: https://skill-graph-ii9k.onrender.com
 
-> Replace the placeholders above after deployment.
+Backend Health Check: https://skill-graph-ii9k.onrender.com/api/health
 
----
+GitHub Repository: https://github.com/Athulsudhakaran4736/skill-graph
 
-## Features
+- **Screen Recording:** [Watch the demo](https://www.loom.com/share/64fef03c02794e7e9f4712583b829fed)
 
-- Developer skill assessment
-- Skill-level scoring
-- Personalized skill-gap analysis
-- Multi-hop prerequisite traversal
-- Interactive skill dependency explorer
-- Graph-based impact analysis for weak skills
-- Realistic seed data
-- Parameterized Cypher queries
-- Graceful API and database error handling
-- Responsive UI with loading, empty, and error states
+Features
 
----
+Developer skill assessment
 
-## Why a Graph Database?
+Skill-level scoring
 
-The core problem in SkillGraph is not simply storing questions and scores. The interesting part is understanding the **relationships between skills**.
+Personalized skill-gap analysis
+
+Multi-hop prerequisite traversal
+
+Interactive skill dependency explorer
+
+Graph-based impact analysis for weak skills
+
+Realistic seed data
+
+Parameterized Cypher queries
+
+Graceful API and database error handling
+
+Responsive UI with loading, empty, and error states
+
+Why a Graph Database?
+
+The core problem in SkillGraph is not simply storing questions and scores. The interesting part is understanding the relationships between skills.
 
 For example:
 
-```text
 Next.js
-   ↓ REQUIRES
+↓ REQUIRES
 React
-   ↓ REQUIRES
+↓ REQUIRES
 JavaScript
-   ↓ REQUIRES
+↓ REQUIRES
 Programming Fundamentals
-```
 
 A candidate may score poorly in JavaScript. That weakness can affect readiness for React and Next.js, even if those skills are not directly tested in the same question.
 
@@ -55,200 +60,173 @@ A relational database could model the same information, but discovering arbitrar
 
 CognoDB allows SkillGraph to express these questions directly through graph traversal.
 
----
-
-## Example Graph Questions
+Example Graph Questions
 
 SkillGraph can answer questions such as:
 
-- What skills are required before learning Next.js?
-- Which prerequisites are two or more levels deep?
-- Which skills are affected by a candidate's weakness in React?
-- Which assessment questions test a particular skill?
-- What knowledge areas does each skill belong to?
-- What learning dependencies connect one technology to another?
+What skills are required before learning Next.js?
 
----
+Which prerequisites are two or more levels deep?
 
-## Technology Stack
+Which skills are affected by a candidate's weakness in React?
 
-### Frontend
+Which assessment questions test a particular skill?
 
-- React
-- Vite
-- Ant Design
-- React Router
-- Axios
-- React Flow (`@xyflow/react`)
+What knowledge areas does each skill belong to?
 
-### Backend
+What learning dependencies connect one technology to another?
 
-- Node.js
-- Express.js
-- Neo4j JavaScript Driver
-- dotenv
-- CORS
-- Helmet
+Technology Stack
 
-### Database
+Frontend
 
-- CognoDB Cloud
-- openCypher
-- Bolt protocol
+React
 
----
+Vite
 
-## Architecture
+Ant Design
 
-```mermaid
+React Router
+
+Axios
+
+React Flow (@xyflow/react)
+
+Backend
+
+Node.js
+
+Express.js
+
+Neo4j JavaScript Driver
+
+dotenv
+
+CORS
+
+Helmet
+
+Database
+
+CognoDB Cloud
+
+openCypher
+
+Bolt protocol
+
+Deployment
+
+Vercel — frontend
+
+Render — backend
+
+CognoDB Cloud — graph database
+
+Architecture
+
 flowchart TD
-    A[React + Vite Frontend] -->|REST API| B[Node.js + Express API]
-    B -->|Neo4j JavaScript Driver / Bolt| C[CognoDB Cloud]
+A[React + Vite Frontend<br/>Vercel] -->|REST API / HTTPS| B[Node.js + Express API<br/>Render]
+B -->|Neo4j JavaScript Driver / Bolt| C[CognoDB Cloud]
 
     B --> D[Controllers]
     D --> E[Services]
     E --> F[Cypher Query Layer]
     F --> C
-```
 
 The frontend never connects directly to CognoDB. Database credentials remain on the backend and are read from environment variables.
 
----
+Graph Data Model
 
-## Graph Data Model
+SkillGraph models candidates, assessment questions, technical skills, topics, and the relationships between them.
 
-```mermaid
-graph TD
-    C[Candidate]
-    Q[Question]
-    S[Skill]
-    T[Topic]
+Nodes
 
-    C -->|ANSWERED| Q
-    C -->|HAS_SKILL| S
-    Q -->|TESTS| S
-    S -->|BELONGS_TO| T
-    S -->|REQUIRES| S
-    S -->|RELATED_TO| S
-```
-
-### Nodes
-
-#### Candidate
+Candidate
 
 Represents a person who completes an assessment.
 
-Example properties:
-
-```text
 id
 name
 createdAt
-```
 
-#### Question
+Question
 
 Represents an assessment question.
 
-Example properties:
-
-```text
 id
 text
 options
 correctAnswer
 difficulty
-```
 
-#### Skill
+Skill
 
 Represents a technical skill.
 
-Example properties:
-
-```text
 id
 name
 description
-```
 
-#### Topic
+Topic
 
 Represents a broad knowledge area.
 
-Example properties:
-
-```text
 id
 name
 description
-```
 
----
+Relationships
 
-## Relationships
-
-### `(:Question)-[:TESTS]->(:Skill)`
+(:Question)-[:TESTS]->(:Skill)
 
 Connects an assessment question to the skill it evaluates.
 
-### `(:Skill)-[:BELONGS_TO]->(:Topic)`
+(:Skill)-[:BELONGS_TO]->(:Topic)
 
 Places a skill inside a broader knowledge area.
 
-### `(:Skill)-[:REQUIRES]->(:Skill)`
+(:Skill)-[:REQUIRES]->(:Skill)
 
 Represents prerequisite knowledge.
 
-Example:
-
-```text
 Next.js -[:REQUIRES]-> React
-React   -[:REQUIRES]-> JavaScript
-```
+React -[:REQUIRES]-> JavaScript
 
-### `(:Skill)-[:RELATED_TO]->(:Skill)`
+(:Skill)-[:RELATED_TO]->(:Skill)
 
 Represents closely related technical skills.
 
-### `(:Candidate)-[:ANSWERED]->(:Question)`
+(:Candidate)-[:ANSWERED]->(:Question)
 
 Stores candidate responses.
 
-Relationship properties include:
+Relationship properties:
 
-```text
 answer
 correct
 answeredAt
-```
 
-### `(:Candidate)-[:HAS_SKILL]->(:Skill)`
+(:Candidate)-[:HAS_SKILL]->(:Skill)
 
 Stores assessment results for each tested skill.
 
-Relationship properties include:
+Relationship properties:
 
-```text
 score
 correctAnswers
 totalQuestions
 assessedAt
-```
 
----
+Example Skill Graph
 
-## Example Skill Graph
-
-```mermaid
 graph TD
-    PF[Programming Fundamentals]
-    JS[JavaScript]
-    ASYNC[Async JavaScript]
-    REACT[React]
-    STATE[State Management]
-    REDUX[Redux]
-    NEXT[Next.js]
+PF[Programming Fundamentals]
+JS[JavaScript]
+ASYNC[Async JavaScript]
+REACT[React]
+STATE[State Management]
+REDUX[Redux]
+NEXT[Next.js]
 
     JS -->|REQUIRES| PF
     ASYNC -->|REQUIRES| JS
@@ -257,624 +235,477 @@ graph TD
     REDUX -->|REQUIRES| REACT
     REDUX -->|REQUIRES| STATE
     NEXT -->|REQUIRES| REACT
-```
 
 This model enables multi-hop traversals such as:
 
-```text
 Next.js
 → React
 → JavaScript
 → Programming Fundamentals
-```
 
----
+Main Cypher Queries
 
-## Main Cypher Queries
+1. Find All Skills
 
-### 1. Find all skills
-
-```cypher
 MATCH (skill:Skill)
 OPTIONAL MATCH (skill)-[:BELONGS_TO]->(topic:Topic)
 
 RETURN
-  skill.id AS id,
-  skill.name AS name,
-  skill.description AS description,
-  topic.id AS topicId,
-  topic.name AS topicName
+skill.id AS id,
+skill.name AS name,
+skill.description AS description,
+topic.id AS topicId,
+topic.name AS topicName
 
 ORDER BY topic.name, skill.name
-```
 
----
+2. Multi-Hop Prerequisite Traversal
 
-### 2. Multi-Hop Prerequisite Traversal
-
-```cypher
 MATCH (skill:Skill {id: $skillId})
 
 OPTIONAL MATCH path =
-  (skill)-[:REQUIRES*1..4]->(prerequisite:Skill)
+(skill)-[:REQUIRES*1..4]->(prerequisite:Skill)
 
 RETURN
-  skill.id AS skillId,
-  skill.name AS skillName,
-  prerequisite.id AS id,
-  prerequisite.name AS name,
-  prerequisite.description AS description,
-  min(length(path)) AS distance
+skill.id AS skillId,
+skill.name AS skillName,
+prerequisite.id AS id,
+prerequisite.name AS name,
+prerequisite.description AS description,
+min(length(path)) AS distance
 
 ORDER BY distance, name
-```
 
-The query follows `REQUIRES` relationships from one to four levels deep.
+The query follows REQUIRES relationships from one to four levels deep.
 
-For `nextjs`, the result can include:
+For nextjs:
 
-```text
-React                     → 1 hop
-JavaScript                → 2 hops
+React → 1 hop
+JavaScript → 2 hops
 Programming Fundamentals → 3 hops
-```
 
-This is one of the main graph-specific queries in the project.
+3. Skill Gap Impact Analysis
 
----
-
-### 3. Skill Gap Impact Analysis
-
-```cypher
 MATCH (candidate:Candidate {
-  id: $candidateId
+id: $candidateId
 })-[assessment:HAS_SKILL]->(weakSkill:Skill)
 
 WHERE assessment.score < $threshold
 
 OPTIONAL MATCH path =
-  (affectedSkill:Skill)
-  -[:REQUIRES*1..4]->
-  (weakSkill)
+(affectedSkill:Skill) -[:REQUIRES*1..4]->
+(weakSkill)
 
 RETURN
-  weakSkill.id AS weakSkillId,
-  weakSkill.name AS weakSkillName,
-  assessment.score AS score,
-  affectedSkill.id AS affectedSkillId,
-  affectedSkill.name AS affectedSkillName,
-  CASE
-    WHEN path IS NULL THEN null
-    ELSE length(path)
-  END AS distance
+weakSkill.id AS weakSkillId,
+weakSkill.name AS weakSkillName,
+assessment.score AS score,
+affectedSkill.id AS affectedSkillId,
+affectedSkill.name AS affectedSkillName,
+CASE
+WHEN path IS NULL THEN null
+ELSE length(path)
+END AS distance
 
 ORDER BY score ASC, distance ASC
-```
 
 If a candidate performs poorly in React, the graph can discover that this may affect skills such as Next.js or Redux because those skills depend on React.
 
----
-
-## Parameterized Queries
+Parameterized Queries
 
 All dynamic Cypher values are passed through Neo4j driver parameters.
 
-Example:
-
-```javascript
 await session.run(GET_SKILL_PREREQUISITES, {
-  skillId,
+skillId,
 });
-```
 
-The Cypher query uses:
+Cypher uses:
 
-```cypher
 {id: $skillId}
-```
 
-instead of constructing queries through string concatenation.
+instead of string concatenation.
 
----
+Assessment Flow
 
-## Assessment Flow
-
-```mermaid
 flowchart TD
-    A[Candidate enters name] --> B[Load assessment questions]
-    B --> C[Candidate answers questions]
-    C --> D[Submit assessment]
-    D --> E[Validate answers on backend]
-    E --> F[Calculate score per skill]
-    F --> G[Create Candidate node]
-    G --> H[Create ANSWERED relationships]
-    H --> I[Create HAS_SKILL relationships]
-    I --> J[Traverse skill dependency graph]
-    J --> K[Return skill gaps and impacted skills]
-    K --> L[Display results]
-```
+A[Candidate enters name] --> B[Load assessment questions]
+B --> C[Candidate answers questions]
+C --> D[Submit assessment]
+D --> E[Validate answers on backend]
+E --> F[Calculate score per skill]
+F --> G[Create Candidate node]
+G --> H[Create ANSWERED relationships]
+H --> I[Create HAS_SKILL relationships]
+I --> J[Traverse skill dependency graph]
+J --> K[Return skill gaps and impacted skills]
+K --> L[Display results]
 
----
+API Endpoints
 
-## API Endpoints
+Base URL:
 
-### Health
+https://skill-graph-ii9k.onrender.com/api
 
-```http
+Health
+
 GET /api/health
-```
 
-Checks both the Express server and CognoDB connection.
+Skills
 
-### Skills
-
-```http
 GET /api/skills
-```
 
-Returns all skills.
-
-```http
 GET /api/skills/:skillId
-```
 
-Returns details for a single skill.
-
-```http
 GET /api/skills/:skillId/prerequisites
-```
 
-Returns multi-hop prerequisites.
-
-```http
 GET /api/skills/:skillId/graph
-```
 
-Returns graph nodes and edges used by the Skill Explorer.
+Questions
 
-### Questions
-
-```http
 GET /api/questions
-```
 
-Returns assessment questions without exposing the correct answers.
+Assessments
 
-### Assessments
-
-```http
 POST /api/assessments
-```
 
 Example request:
 
-```json
 {
-  "candidateName": "Demo Candidate",
-  "answers": [
-    {
-      "questionId": "q1",
-      "answer": "let"
-    },
-    {
-      "questionId": "q2",
-      "answer": "await"
-    }
-  ]
+"candidateName": "Demo Candidate",
+"answers": [
+{
+"questionId": "q1",
+"answer": "let"
+},
+{
+"questionId": "q2",
+"answer": "await"
 }
-```
+]
+}
 
 The backend:
 
-1. Validates question IDs
-2. Fetches correct answers from CognoDB
-3. Evaluates submitted responses
-4. Calculates skill scores
-5. Creates the candidate
-6. Creates `ANSWERED` relationships
-7. Creates `HAS_SKILL` relationships
-8. Runs graph-based skill-gap analysis
+Validates question IDs
 
----
+Fetches correct answers from CognoDB
 
-## Project Structure
+Evaluates submitted responses
 
-```text
+Calculates skill scores
+
+Creates the candidate
+
+Creates ANSWERED relationships
+
+Creates HAS_SKILL relationships
+
+Runs graph-based skill-gap analysis
+
+Project Structure
+
 skill-graph/
 │
 ├── client/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── SkillGraphView.jsx
-│   │   ├── pages/
-│   │   │   ├── DashboardPage.jsx
-│   │   │   ├── AssessmentPage.jsx
-│   │   │   ├── ResultsPage.jsx
-│   │   │   └── SkillExplorerPage.jsx
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── styles.css
-│   └── package.json
+│ ├── src/
+│ │ ├── components/
+│ │ │ └── SkillGraphView.jsx
+│ │ ├── pages/
+│ │ │ ├── DashboardPage.jsx
+│ │ │ ├── AssessmentPage.jsx
+│ │ │ ├── ResultsPage.jsx
+│ │ │ └── SkillExplorerPage.jsx
+│ │ ├── services/
+│ │ │ └── api.js
+│ │ ├── App.jsx
+│ │ ├── main.jsx
+│ │ └── styles.css
+│ ├── vercel.json
+│ └── package.json
 │
 ├── server/
-│   ├── scripts/
-│   │   ├── seed.js
-│   │   └── seedData.js
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── database.js
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── queries/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── app.js
-│   │   └── server.js
-│   ├── .env.example
-│   └── package.json
+│ ├── scripts/
+│ │ ├── seed.js
+│ │ └── seedData.js
+│ ├── src/
+│ │ ├── config/
+│ │ │ └── database.js
+│ │ ├── controllers/
+│ │ ├── middleware/
+│ │ ├── queries/
+│ │ ├── routes/
+│ │ ├── services/
+│ │ ├── app.js
+│ │ └── server.js
+│ ├── .env.example
+│ └── package.json
 │
 ├── docs/
+│ ├── graph-model.png
+│ ├── dashboard.png
+│ ├── assessment.png
+│ ├── results.png
+│ └── skill-explorer.png
 │
 ├── .gitignore
 └── README.md
-```
 
----
+Local Setup
 
-## Local Setup
+Prerequisites
 
-### Prerequisites
+Node.js 20+
 
-Make sure you have:
+npm
 
-- Node.js 20+
-- npm
-- Git
-- A CognoDB Cloud account
-- A CognoDB database instance
+Git
 
----
+A CognoDB Cloud account
 
-## 1. Clone the Repository
+A CognoDB database instance
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+1. Clone the Repository
+
+git clone https://github.com/Athulsudhakaran4736/skill-graph.git
 cd skill-graph
-```
 
----
+2. Create a CognoDB Instance
 
-## 2. Create a CognoDB Instance
+Sign in to CognoDB Cloud.
 
-1. Sign in to CognoDB Cloud.
-2. Create a free `c0` instance.
-3. Select a suitable region.
-4. Save the generated database password immediately.
-5. Copy the Bolt connection URI.
+Create a free c0 instance.
 
-The connection URI will look similar to:
+Select a suitable region.
 
-```text
+Save the generated database password immediately.
+
+Copy the Bolt connection URI.
+
+Example connection URI:
+
 bolt+s://<instance-id>.databases.cognodb.cloud
-```
 
-The default database username is:
+Default username:
 
-```text
 cognodb
-```
 
----
+3. Backend Setup
 
-## 3. Backend Setup
-
-Navigate to the server:
-
-```bash
 cd server
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
 
-Create:
+Create server/.env:
 
-```text
-server/.env
-```
-
-Add:
-
-```env
 PORT=5000
-
 COGNODB_URI=bolt+s://YOUR_INSTANCE_ID.databases.cognodb.cloud
 COGNODB_USERNAME=cognodb
 COGNODB_PASSWORD=YOUR_PASSWORD
-```
+FRONTEND_URL=http://localhost:5173
 
 Never commit this file.
 
-An `.env.example` file is included in the repository.
+4. Seed CognoDB
 
----
-
-## 4. Seed CognoDB
-
-From the `server` directory:
-
-```bash
 npm run seed
-```
 
 The seed script creates:
 
-- Topics
-- Skills
-- Questions
-- `BELONGS_TO` relationships
-- `REQUIRES` relationships
-- `RELATED_TO` relationships
-- `TESTS` relationships
+Topics
 
-It also runs a sample multi-hop traversal to verify the graph.
+Skills
 
-Example output:
+Questions
 
-```text
-Starting SkillGraph database seed...
+BELONGS_TO relationships
 
-Seeded 4 topics
-Seeded 18 skills
-Created BELONGS_TO relationships
-Created REQUIRES relationships
-Created RELATED_TO relationships
-Seeded 12 questions
-Created TESTS relationships
+REQUIRES relationships
 
-Next.js prerequisite traversal:
+RELATED_TO relationships
 
-React - 1 hop(s)
-JavaScript - 2 hop(s)
-Programming Fundamentals - 3 hop(s)
+TESTS relationships
 
-SkillGraph seed completed successfully.
-```
+It also verifies a sample multi-hop traversal.
 
----
+5. Start the Backend
 
-## 5. Start the Backend
-
-```bash
 npm run dev
-```
 
-The API runs at:
+API:
 
-```text
 http://localhost:5000
-```
 
-Test:
+Health check:
 
-```text
 http://localhost:5000/api/health
-```
 
-Expected response:
-
-```json
-{
-  "success": true,
-  "server": "healthy",
-  "database": "connected",
-  "result": 1
-}
-```
-
----
-
-## 6. Frontend Setup
+6. Frontend Setup
 
 Open another terminal:
 
-```bash
 cd client
 npm install
-```
 
-Create:
+Create client/.env:
 
-```text
-client/.env
-```
-
-Add:
-
-```env
 VITE_API_BASE_URL=http://localhost:5000/api
-```
 
-Start the frontend:
+Run:
 
-```bash
 npm run dev
-```
 
 Open:
 
-```text
 http://localhost:5173
-```
 
----
+Environment Variables
 
-## Environment Variables
+Backend
 
-### Backend
-
-```env
 PORT=
 COGNODB_URI=
 COGNODB_USERNAME=
 COGNODB_PASSWORD=
-```
+FRONTEND_URL=
 
-### Frontend
+FRONTEND_URL is used by the Express CORS configuration to allow requests from the frontend.
 
-```env
+Production:
+
+FRONTEND_URL=https://skill-graph-wheat.vercel.app
+
+Frontend
+
 VITE_API_BASE_URL=
-```
 
-Actual `.env` files are excluded from Git.
+Production:
 
----
+VITE_API_BASE_URL=https://skill-graph-ii9k.onrender.com/api
 
-## Error Handling
+Actual .env files are excluded from Git.
+
+Error Handling
 
 The application includes handling for:
 
-- Invalid candidate data
-- Missing assessment answers
-- Duplicate question submissions
-- Invalid question IDs
-- Missing skills
-- API errors
-- CognoDB connectivity failures
-- Frontend loading states
-- Frontend empty states
-- Frontend request failures
+Invalid candidate data
+
+Missing assessment answers
+
+Duplicate question submissions
+
+Invalid question IDs
+
+Missing skills
+
+API errors
+
+CognoDB connectivity failures
+
+Frontend loading states
+
+Frontend empty states
+
+Frontend request failures
 
 If CognoDB is unavailable, the API health endpoint returns an appropriate service-unavailable response rather than crashing silently.
 
----
+Screenshots
 
-## Screenshots
+Dashboard
 
-Add deployed screenshots to the `docs/` directory and update the paths below.
+Assessment
 
-### Dashboard
+Assessment Results
 
-```md
-![SkillGraph Dashboard](docs/dashboard.png)
-```
+Skill Explorer
 
-### Assessment
+Deployment
 
-```md
-![Developer Assessment](docs/assessment.png)
-```
-
-### Results
-
-```md
-![Assessment Results](docs/results.png)
-```
-
-### Skill Gap Analysis
-
-```md
-![Skill Gap Analysis](docs/skill-gaps.png)
-```
-
-### Skill Explorer
-
-```md
-![Skill Explorer](docs/skill-explorer.png)
-```
-
-Recommended README usage after the screenshots exist:
-
-## Graph Data Model
-
-The application models candidates, assessment questions, skills, topics, and the relationships between them.
-
-![SkillGraph Data Model](docs/graph-model.png)
-
-```markdown
-![SkillGraph Dashboard](docs/dashboard.png)
-
-![Developer Assessment](docs/assessment.png)
-
-![Assessment Results](docs/results.png)
-
-![Skill Explorer](docs/skill-explorer.png)
-```
-
----
-
-## Deployment
-
-The application is designed to be deployed as:
-
-```text
-React / Vite
-      ↓
-Frontend Hosting
-      ↓
-Express REST API
-      ↓
-Backend Hosting
-      ↓
+React + Vite
+│
+▼
+Vercel
+│
+│ HTTPS / REST
+▼
+Node.js + Express
+│
+▼
+Render
+│
+│ Neo4j Driver / Bolt
+▼
 CognoDB Cloud
-```
 
-When deploying the backend, configure:
+Frontend — Vercel
 
-```text
-COGNODB_URI
-COGNODB_USERNAME
-COGNODB_PASSWORD
-PORT
-```
+Production URL:
 
-When deploying the frontend, configure:
+https://skill-graph-wheat.vercel.app/
 
-```text
-VITE_API_BASE_URL=https://YOUR_BACKEND_DOMAIN/api
-```
+Environment:
 
----
+VITE_API_BASE_URL=https://skill-graph-ii9k.onrender.com/api
 
-## Security Notes
+Backend — Render
 
-- CognoDB credentials are never sent to the browser.
-- Database credentials are loaded through environment variables.
-- `.env` files are excluded from version control.
-- Correct assessment answers are not returned through the questions API.
-- Dynamic Cypher values use query parameters instead of string concatenation.
-- Database writes for an assessment are grouped in a transaction.
+Production URL:
 
----
+https://skill-graph-ii9k.onrender.com
 
-## Future Improvements
+Environment:
+
+COGNODB_URI=<CognoDB Bolt URI>
+COGNODB_USERNAME=cognodb
+COGNODB_PASSWORD=<CognoDB password>
+FRONTEND_URL=https://skill-graph-wheat.vercel.app
+
+Secrets are configured through the hosting provider and are not committed to the repository.
+
+Database — CognoDB Cloud
+
+CognoDB Cloud is accessed from the backend through the official Neo4j JavaScript driver over the Bolt protocol.
+
+Security Notes
+
+CognoDB credentials are never sent to the browser.
+
+Database credentials are loaded through environment variables.
+
+.env files are excluded from version control.
+
+Correct assessment answers are not returned through the questions API.
+
+Dynamic Cypher values use query parameters instead of string concatenation.
+
+Database writes for an assessment are grouped in a transaction.
+
+Future Improvements
 
 Given more time, SkillGraph could be extended with:
 
-- Larger skill and question datasets
-- Candidate assessment history
-- Recommended personalized learning paths
-- Difficulty-weighted scoring
-- More detailed graph visualization
-- Assessment categories
-- Skill search and filtering
-- Admin tooling for managing skills and questions
+Larger skill and question datasets
+
+Candidate assessment history
+
+Personalized learning paths
+
+Difficulty-weighted scoring
+
+More detailed graph visualization
+
+Assessment categories
+
+Skill search and filtering
+
+Admin tooling for managing skills and questions
 
 Authentication was intentionally left outside the current scope so the project could focus on graph modelling, traversal, assessment logic, and user experience.
 
----
+Author
 
-## Author
+Athul Sudhakaran
 
-**Athul Sudhakaran**
-
----
-
-## License
+License
 
 This project was created as a technical take-home assessment.
