@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f6f7fb;
+  color: #1f2937;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.page-container {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.dashboard-header,
+.results-header {
+  max-width: 720px;
+}
+
+.brand {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.hero-description {
+  max-width: 620px;
+  font-size: 17px;
+}
+
+.section-spacing {
+  margin-top: 30px;
+}
+
+.start-card {
+  max-width: 600px;
+  margin-top: 30px;
+}
+
+.start-button {
+  margin-top: 16px;
+}
+
+.center-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assessment-container {
+  max-width: 850px;
+}
+
+.assessment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question-card {
+  margin-top: 28px;
+}
+
+.question-title {
+  margin-top: 12px !important;
+}
+
+.answer-group {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.answer-option {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.assessment-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.score-card {
+  margin-top: 30px;
+}
+
+.section-title {
+  margin-top: 40px !important;
+}
+
+.skill-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.restart-button {
+  margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 30px 0;
+  }
+
+  .assessment-top {
+    align-items: flex-start;
+    gap: 10px;
+    flex-direction: column;
+  }
+}
