@@ -1,5 +1,7 @@
 import { Button, Card, Col, Empty, Progress, Row, Tag, Typography } from "antd";
 
+import { ArrowLeftOutlined } from "@ant-design/icons";
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 const { Title, Paragraph, Text } = Typography;
@@ -35,6 +37,14 @@ function ResultsPage() {
 
   return (
     <div className="page-container">
+      <Button
+        type="text"
+        icon={<ArrowLeftOutlined />}
+        onClick={() => navigate("/")}
+      >
+        Dashboard
+      </Button>
+
       <div className="results-header">
         <Text className="brand">SkillGraph</Text>
 

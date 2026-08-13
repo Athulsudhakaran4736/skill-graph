@@ -76,7 +76,7 @@ function DashboardPage() {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container dashboard-page">
       <div className="dashboard-header">
         <Text className="brand">SkillGraph</Text>
 

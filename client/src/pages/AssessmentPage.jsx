@@ -169,6 +169,15 @@ function AssessmentPage() {
 
   return (
     <div className="page-container assessment-container">
+      <Button
+        type="text"
+        icon={<ArrowLeftOutlined />}
+        className="dashboard-link-button"
+        onClick={() => navigate("/")}
+      >
+        Dashboard
+      </Button>
+
       <div className="assessment-top">
         <div>
           <Text type="secondary">Developer Assessment</Text>

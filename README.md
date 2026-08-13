@@ -790,6 +790,12 @@ Add deployed screenshots to the `docs/` directory and update the paths below.
 
 Recommended README usage after the screenshots exist:
 
+## Graph Data Model
+
+The application models candidates, assessment questions, skills, topics, and the relationships between them.
+
+![SkillGraph Data Model](docs/graph-model.png)
+
 ```markdown
 ![SkillGraph Dashboard](docs/dashboard.png)
 

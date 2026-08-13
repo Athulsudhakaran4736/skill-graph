@@ -15,9 +15,55 @@ body {
 }
 
 .page-container {
-  width: min(1100px, calc(100% - 32px));
+  width: min(1320px, calc(100% - 24px));
   margin: 0 auto;
   padding: 60px 0;
+}
+
+.dashboard-page {
+  min-height: 100svh;
+  padding: 24px 0 16px;
+}
+
+.dashboard-page .dashboard-header {
+  max-width: 920px;
+}
+
+.dashboard-page .brand {
+  margin-bottom: 8px;
+}
+
+.dashboard-page .dashboard-header .ant-typography h1,
+.dashboard-page .dashboard-header h1.ant-typography,
+.dashboard-page .dashboard-header .ant-typography-title {
+  margin-bottom: 12px;
+  font-size: clamp(2.6rem, 4.4vw, 4rem);
+  line-height: 1.1;
+}
+
+.dashboard-page .hero-description {
+  max-width: 760px;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.dashboard-page .section-spacing,
+.dashboard-page .action-cards {
+  margin-top: 20px;
+}
+
+.dashboard-page .ant-card .ant-card-body {
+  padding: 24px 28px;
+}
+
+.dashboard-page .action-card .ant-typography.ant-typography-h3,
+.dashboard-page .action-card h3.ant-typography,
+.dashboard-page .action-card .ant-typography-title {
+  margin-bottom: 10px;
+}
+
+.dashboard-page .action-card .ant-typography + .ant-typography {
+  margin-bottom: 16px;
 }
 
 .dashboard-header,
@@ -30,6 +76,11 @@ body {
   margin-bottom: 12px;
   font-size: 16px;
   font-weight: 700;
+}
+
+.dashboard-link-button {
+  margin-bottom: 12px;
+  padding-inline: 0;
 }
 
 .hero-description {
@@ -112,6 +163,17 @@ body {
 @media (max-width: 600px) {
   .page-container {
     padding: 30px 0;
+  }
+
+  .dashboard-page {
+    width: min(100%, calc(100% - 16px));
+    padding: 18px 0 12px;
+  }
+
+  .dashboard-page .dashboard-header .ant-typography h1,
+  .dashboard-page .dashboard-header h1.ant-typography,
+  .dashboard-page .dashboard-header .ant-typography-title {
+    font-size: 2.2rem;
   }
 
   .assessment-top {
@@ -197,4 +259,23 @@ body {
 
 .start-button {
   margin-top: 16px;
+}
+
+@media (max-height: 900px) {
+  .dashboard-page {
+    padding: 18px 0 12px;
+  }
+
+  .dashboard-page .section-spacing,
+  .dashboard-page .action-cards {
+    margin-top: 16px;
+  }
+
+  .dashboard-page .ant-card .ant-card-body {
+    padding: 20px 24px;
+  }
+
+  .dashboard-page .hero-description {
+    font-size: 15px;
+  }
 }
