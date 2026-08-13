@@ -1,8 +1,14 @@
 export const errorHandler = (error, req, res, next) => {
   console.error("Request failed:", error.message);
 
-  res.status(503).json({
+  const statusCode = error.statusCode || 500;
+
+  res.status(statusCode).json({
     success: false,
-    message: "The service is temporarily unavailable. Please try again.",
+
+    message:
+      statusCode === 500
+        ? "Something went wrong while processing the request."
+        : error.message,
   });
 };

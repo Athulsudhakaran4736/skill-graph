@@ -6,6 +6,7 @@ import driver from "./config/database.js";
 
 import skillRoutes from "./routes/skillRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
+import assessmentRoutes from "./routes/assessmentRoutes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -57,6 +58,8 @@ app.get("/api/health", async (req, res) => {
 app.use("/api/skills", skillRoutes);
 
 app.use("/api/questions", questionRoutes);
+
+app.use("/api/assessments", assessmentRoutes);
 
 // 404
 
