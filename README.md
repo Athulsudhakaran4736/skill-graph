@@ -135,9 +135,11 @@ B -->|Neo4j JavaScript Driver / Bolt| C[CognoDB Cloud]
 
 The frontend never connects directly to CognoDB. Database credentials remain on the backend and are read from environment variables.
 
-Graph Data Model
+## Graph Data Model
 
 SkillGraph models candidates, assessment questions, technical skills, topics, and the relationships between them.
+
+![SkillGraph Data Model](docs/graph-model.png)
 
 Nodes
 
@@ -609,15 +611,23 @@ Frontend request failures
 
 If CognoDB is unavailable, the API health endpoint returns an appropriate service-unavailable response rather than crashing silently.
 
-Screenshots
+## Screenshots
 
-Dashboard
+### Dashboard
 
-Assessment
+![SkillGraph Dashboard](docs/dashboard.png)
 
-Assessment Results
+### Assessment
 
-Skill Explorer
+![Developer Assessment](docs/assessment.png)
+
+### Assessment Results
+
+![Assessment Results](docs/results.png)
+
+### Skill Explorer
+
+![Skill Explorer](docs/skill-explorer.png)
 
 Deployment
 
