@@ -627,7 +627,7 @@ If CognoDB is unavailable, the API health endpoint returns an appropriate servic
 
 ### Skill Explorer
 
-![Skill Explorer](docs/skill-explorer.png)
+![Skill Explorer](docs/skill-explore.png)
 
 Deployment
 
