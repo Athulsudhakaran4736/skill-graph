@@ -41,10 +41,6 @@ body {
   margin-top: 30px;
 }
 
-.start-card {
-  max-width: 600px;
-  margin-top: 30px;
-}
 
 .start-button {
   margin-top: 16px;
@@ -123,4 +119,82 @@ body {
     gap: 10px;
     flex-direction: column;
   }
+}
+
+
+
+.explorer-header {
+  max-width: 700px;
+  margin-top: 24px;
+}
+
+.explorer-controls {
+  margin-top: 30px;
+}
+
+.skill-selector {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.graph-card {
+  margin-top: 24px;
+}
+
+.graph-summary {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 20px;
+}
+
+.skill-graph-canvas {
+  width: 100%;
+  height: 520px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.graph-loading {
+  height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-explanation {
+  margin-top: 20px;
+}
+
+.react-flow__node {
+  cursor: grab;
+}
+
+.react-flow__node:active {
+  cursor: grabbing;
+}
+
+@media (max-width: 600px) {
+  .skill-graph-canvas {
+    height: 430px;
+  }
+
+  .graph-summary {
+    gap: 30px;
+  }
+}
+
+.action-cards {
+  margin-top: 30px;
+}
+
+.action-card {
+  height: 100%;
+}
+
+.start-button {
+  margin-top: 16px;
 }

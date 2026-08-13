@@ -127,34 +127,58 @@ function DashboardPage() {
         </Col>
       </Row>
 
-      <Card className="start-card">
-        <Title level={3}>Start your assessment</Title>
+      <Row gutter={[20, 20]} className="action-cards">
+        <Col xs={24} md={12}>
+          <Card className="action-card">
+            <Title level={3}>Start your assessment</Title>
 
-        <Paragraph>
-          Answer a short set of developer questions. Your responses will be
-          mapped to skills in CognoDB.
-        </Paragraph>
+            <Paragraph>
+              Answer a short set of developer questions. Your responses will be
+              mapped to skills in CognoDB.
+            </Paragraph>
 
-        <Input
-          size="large"
-          placeholder="Enter your name"
-          value={candidateName}
-          onChange={(event) => setCandidateName(event.target.value)}
-          onPressEnter={handleStart}
-        />
+            <Input
+              size="large"
+              placeholder="Enter your name"
+              value={candidateName}
+              onChange={(event) => setCandidateName(event.target.value)}
+              onPressEnter={handleStart}
+            />
 
-        <Button
-          type="primary"
-          size="large"
-          block
-          className="start-button"
-          disabled={!candidateName.trim()}
-          onClick={handleStart}
-          icon={<ArrowRightOutlined />}
-        >
-          Start Assessment
-        </Button>
-      </Card>
+            <Button
+              type="primary"
+              size="large"
+              block
+              className="start-button"
+              disabled={!candidateName.trim()}
+              onClick={handleStart}
+              icon={<ArrowRightOutlined />}
+            >
+              Start Assessment
+            </Button>
+          </Card>
+        </Col>
+
+        <Col xs={24} md={12}>
+          <Card className="action-card">
+            <Title level={3}>Explore the Skill Graph</Title>
+
+            <Paragraph>
+              See how developer skills depend on each other and discover the
+              learning path for technologies like React, Next.js and JWT.
+            </Paragraph>
+
+            <Button
+              size="large"
+              block
+              onClick={() => navigate("/explore")}
+              icon={<DeploymentUnitOutlined />}
+            >
+              Explore Skill Graph
+            </Button>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }
